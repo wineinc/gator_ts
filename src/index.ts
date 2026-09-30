@@ -1,7 +1,8 @@
 import {setUser, readConfig } from "./config.js"
 import {
   CommandsRegistry, registerCommand, handlerLogin, handlerRegister,
-  handlerReset, handlerListUsers, runCommand
+  handlerReset, handlerListUsers, runCommand, handlerAgg, handlerAddFeed, handlerFeeds,
+  handlerFollow,  handlerFollowing
 } from "./commandHandler.js";
 
 
@@ -14,6 +15,11 @@ async function main() {
     registerCommand(cmdRegistry, "register", handlerRegister);
     registerCommand(cmdRegistry, "reset", handlerReset);
     registerCommand(cmdRegistry, "users", handlerListUsers);
+    registerCommand(cmdRegistry, "agg", handlerAgg);
+    registerCommand(cmdRegistry, "addfeed", handlerAddFeed);
+    registerCommand(cmdRegistry, "feeds", handlerFeeds);
+    registerCommand(cmdRegistry, "follow", handlerFollow);
+    registerCommand(cmdRegistry, "following", handlerFollowing);
 
     const args = process.argv.slice(2);
 
@@ -24,6 +30,8 @@ async function main() {
     const cmdName = args[0];
     const cmdArgs = args.slice(1);
 
+    console.log(`command name: ${cmdName}`);
+    console.log(`command args: ${cmdArgs}`);
     await runCommand(cmdRegistry, cmdName, ...cmdArgs);
     process.exit(0);
   }
